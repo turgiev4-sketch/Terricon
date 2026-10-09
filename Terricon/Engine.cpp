@@ -8,8 +8,8 @@ enum E_Brick_type
     EBT_red
 };
 
-HPEN Brick_Red_pen, Brick_Yellow_pen;
-HBRUSH Brick_Red_Brush, Brick_Yellow_Brush;
+HPEN Brick_Red_pen, Brick_Yellow_pen, Platform_Green_pen;
+HBRUSH Brick_Red_Brush, Brick_Yellow_Brush, Platform_Green_Brush;
 
 const int Global_Scale = 3;
 const int Height = 7;
@@ -21,22 +21,22 @@ const int Level_Y_Offset = 8;
 const int Circle_Size = 6;
 int Inner_Wight = 21;
 
-char level_01[14][12] =
+char level_01[14][13] =
 {
-    2,2,0,0,0,0,0,0,0,0,2,2,
-    1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,
-    2,2,2,2,2,2,2,2,2,2,2,2,
-    2,2,2,2,2,2,2,2,2,2,2,2,
-    1,1,1,1,1,1,1,1,1,1,1,1,
-    1,1,1,1,1,1,1,1,1,1,1,1,
-    2,2,2,2,2,2,2,2,2,2,2,2,
-    2,2,2,2,2,2,2,2,2,2,2,2,
-    0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,0,0,0,0,0,0,
+    2,2,2,2,2,2,2,2,2,2,2,2,2,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,
+    1,2,2,2,1,2,2,2,1,2,2,2,1,
+    1,2,1,2,1,2,1,2,1,1,2,1,1,
+    1,2,1,2,1,2,1,2,1,1,2,1,1,
+    1,2,2,2,1,2,2,2,1,1,2,1,1,
+    1,2,1,2,1,2,1,1,1,1,2,1,1,
+    1,2,1,2,1,2,1,1,1,1,2,1,1,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,
 
 };
 
@@ -48,6 +48,8 @@ void Init()
     Brick_Yellow_Brush = CreateSolidBrush(RGB(224, 176, 16));
     Brick_Red_pen = CreatePen(PS_SOLID, 0, RGB(224, 48, 32));
     Brick_Red_Brush = CreateSolidBrush(RGB(224, 48, 32));
+    Platform_Green_pen = CreatePen(PS_SOLID, 0, RGB(64, 112, 0));
+    Platform_Green_Brush = CreateSolidBrush(RGB(64, 112, 0));
 }
 
 
@@ -94,7 +96,7 @@ void Draw_Level(HDC hdc)
 
     for (int i = 0; i < 14; i++)
     {
-        for (int j = 0; j < 12; j++)
+        for (int j = 0; j < 13; j++)
         {
             Draw_Brick(hdc, Level_X_Offset + j * Cell_Whight, Level_Y_Offset + i * Cell_Height, (E_Brick_type)level_01[i][j]);
         }
@@ -104,8 +106,8 @@ void Draw_Level(HDC hdc)
 void Draw_Platform(HDC hdc,int x,int y)
 { // Отрисовка платформы
 
-    SelectObject(hdc, Brick_Red_pen);
-    SelectObject(hdc, Brick_Red_Brush);
+    SelectObject(hdc, Platform_Green_pen);
+    SelectObject(hdc, Platform_Green_Brush);
 
     Ellipse(hdc, x * Global_Scale, y * Global_Scale, (x + Circle_Size) * Global_Scale, (y + Circle_Size) * Global_Scale);
     Ellipse(hdc, (x + Inner_Wight) * Global_Scale, y * Global_Scale, (x + Circle_Size + Inner_Wight) * Global_Scale, (y + Circle_Size) * Global_Scale);
